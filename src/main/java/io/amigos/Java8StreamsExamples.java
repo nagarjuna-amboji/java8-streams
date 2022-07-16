@@ -1,4 +1,6 @@
-package io.amigos.model;
+package io.amigos;
+
+import io.amigos.model.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
