@@ -2,6 +2,7 @@ package io.amigos;
 
 import io.amigos.model.Employee;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
@@ -53,9 +54,37 @@ public class Java8StreamsExamples {
 //        getAllEmployees_In_Dept(employees);
 
 //        What is the average salary and total salary of the whole organization?
-        getAvg_And_Total_Salary_Of_Org(employees);
+//        getAvg_And_Total_Salary_Of_Org(employees);
+
+//        Separate the employees who are younger or equal to 25 years from those employees who are older than 25 years
+//        getAllEmployees_Younger_Than_EqTo_25(employees);
+
+//        Who is the oldest employee in the organization? What is his age and which department he belongs to?
+//        getOldestEmployee(employees);
+
+//
+
+    }
+
+    private static void getOldestEmployee(List<Employee> employees) {
+
+        Employee employee = employees.stream()
+                .max(Comparator.comparingInt(Employee::getAge))
+                .stream().
+                findFirst().get();
+
+        System.out.println(employee);
 
 
+    }
+
+    private static void getAllEmployees_Younger_Than_EqTo_25(List<Employee> employees) {
+
+        Predicate<Employee> isAgeLE25Predicate = e -> e.getAge() <= 25;
+        employees.stream()
+//                .filter(isAgeLE25Predicate)
+                .collect(Collectors.partitioningBy(isAgeLE25Predicate))
+                .forEach((x,y) -> System.out.println(x +" : " +y.stream().map(Employee::getName).collect(Collectors.toList())));
     }
 
     private static void getAvg_And_Total_Salary_Of_Org(List<Employee> employees) {
